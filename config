@@ -1,74 +1,56 @@
-# Set Mod key to Alt
 set $mod Mod1
-
-# Font
 font pango:monospace 8
 
-# Autostart applications
 exec --no-startup-id dex-autostart --autostart --environment i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
-exec --no-startup-id picom --config /dev/null --backend glx --vsync --blur-method dual_kawase --blur-strength 5 --corner-radius 8 --shadow --shadow-radius 12 --shadow-offset-x -5 --shadow-offset-y -5 --fade-in-step 0.03 --fade-out-step 0.03 --fade-delta 4 --inactive-opacity 0.9 --active-opacity 1.0 --opacity-rule "100:class_g = 'kitty'" --opacity-rule "90:class_g = 'firefox'"
+exec --no-startup-id picom --config /dev/null --backend glx --vsync --blur-method dual_kawase --blur-strength 5 --corner-radius 0 --shadow --shadow-radius 12 --shadow-offset-x -5 --shadow-offset-y -5 --fade-in-step 0.03 --fade-out-step 0.03 --fade-delta 4 --inactive-opacity 0.9 --active-opacity 1.0 --opacity-rule "100:class_g = 'kitty'" --opacity-rule "90:class_g = 'firefox'"
 exec --no-startup-id feh --bg-fill ~/.config/i3/bg.png
 
-# Refresh i3status
 set $refresh_i3status killall -SIGUSR1 i3status
 
-# Volume & Mic keys
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
-# Floating modifier
 floating_modifier $mod
 tiling_drag modifier titlebar
 
-# Application shortcuts
 bindsym $mod+Return exec kitty
 bindsym $mod+Shift+q kill
-bindsym $mod+d exec --no-startup-id dmenu_run
+bindsym $mod+d exec --no-startup-id dmenu_run -fn 'monospace-10' -nb '#250000' -nf '#ffffff' -sb '#ff0000' -sf '#ffffff' -l 10 -p "Run:"
 
-# Focus movement
 bindsym $mod+j focus left
 bindsym $mod+k focus down
 bindsym $mod+l focus up
 bindsym $mod+semicolon focus right
-
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
-# Moving windows
 bindsym $mod+Shift+j move left
 bindsym $mod+Shift+k move down
 bindsym $mod+Shift+l move up
 bindsym $mod+Shift+semicolon move right
-
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# Splitting windows
 bindsym $mod+h split h
 bindsym $mod+v split v
-
-# Fullscreen toggle
 bindsym $mod+f fullscreen toggle
 
-# Layout toggles
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
-# Floating mode
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 
-# Workspaces
 set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
@@ -102,44 +84,42 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
-# Reloading and restarting i3
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
-# Resize mode
 mode "resize" {
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
-
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
-
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym $mod+r mode "default"
+    bindsym j resize shrink width 10 px or 10 ppt
+    bindsym k resize grow height 10 px or 10 ppt
+    bindsym l resize shrink height 10 px or 10 ppt
+    bindsym semicolon resize grow width 10 px or 10 ppt
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
 }
 
 bindsym $mod+r mode "resize"
 
-# i3 Bar Configuration - Now at the Top with Dark Red Theme
 bar {
     position top
     status_command i3status
 
     colors {
-        background #250000  # Dark Red Background
-        statusline #ffffff  # White Text
-        separator  #ff4444  # Light Red Separator
-
-        # Workspace colors
-        focused_workspace   #ff0000 #ff0000 #ffffff  # Bright Red
-        active_workspace    #b71c1c #b71c1c #ffffff  # Darker Red
-        inactive_workspace  #250000 #250000 #aaaaaa  # Dark Red with Gray Text
-        urgent_workspace    #ff4444 #ff0000 #ffffff  # Bright Red Alert
+        background #250000
+        statusline #ffffff
+        separator  #ff4444
+        focused_workspace   #ff0000 #ff0000 #ffffff
+        active_workspace    #b71c1c #b71c1c #ffffff
+        inactive_workspace  #250000 #250000 #aaaaaa
+        urgent_workspace    #ff4444 #ff0000 #ffffff
     }
 }
+
+client.focused          #ff0000 #ff0000 #ffffff #ff0000 #ff0000
+client.focused_inactive #b71c1c #b71c1c #ffffff #b71c1c #b71c1c
+client.unfocused        #250000 #250000 #aaaaaa #250000 #250000
+client.urgent          #ff4444 #ff0000 #ffffff #ff0000 #ff4444
