@@ -24,7 +24,7 @@ tiling_drag modifier titlebar
 bindsym $mod+Return exec kitty
 bindsym $mod+Shift+q kill
 bindsym $mod+d exec --no-startup-id dmenu_run -fn 'monospace-10' -nb '#250000' -nf '#ffffff' -sb '#ff0000' -sf '#ffffff' -l 10 -p "Run:"
-bindsym $mod+Shift+d exec --no-startup-id ~/.local/bin/flatpak-dmenu.sh
+bindsym $mod+Shift+f exec --no-startup-id sh -c 'flatpak run $(ls /var/lib/flatpak/exports/share/applications | sed "s/\.desktop//" | dmenu -fn "monospace-10" -nb "#250000" -nf "#ffffff" -sb "#ff0000" -sf "#ffffff" -l 10 -p "Flatpak:")'
 
 bindsym $mod+j focus left
 bindsym $mod+k focus down
